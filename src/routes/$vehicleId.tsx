@@ -51,13 +51,43 @@ function Vehicle() {
             {notFound ? (
               <NotFoundState />
             ) : (
-              <h1 className="text-3xl uppercase font-extrabold">
-                {data?.make} {data?.model}
-              </h1>
+              <div className="flex flex-col gap-5">
+                <Link to="/" className="text-sm underline">
+                  Back to listings
+                </Link>
+
+                <h1 className="text-3xl uppercase font-extrabold">
+                  {data?.make} {data?.model}
+                </h1>
+              </div>
             )}
           </>
         )}
       </header>
+
+      {data && (
+        <dl className="flex flex-col gap-3 bg-slate-100 border uppercase text-slate-500 border-slate-200 p-5 rounded-md [&_div]:flex [&_div]:gap-5 [&_dt]:w-1/2 [&_dt]:font-bold">
+          <div>
+            <dt>Year</dt>
+            <dd>{data.year}</dd>
+          </div>
+
+          <div>
+            <dt>Price</dt>
+            <dd>£{data.price.toLocaleString()}</dd>
+          </div>
+
+          <div>
+            <dt>Mileage</dt>
+            <dd>{data.mileage.toLocaleString()}</dd>
+          </div>
+
+          <div>
+            <dt>Colour</dt>
+            <dd>{data.colour}</dd>
+          </div>
+        </dl>
+      )}
     </div>
   );
 }
