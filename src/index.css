@@ -4,3 +4,9 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
+
+@layer components {
+  .btn {
+    @apply border border-slate-200 rounded-md px-2 py-1.5 bg-slate-100 text-slate-800 hover:shadow transition-shadow;
+  }
+}
