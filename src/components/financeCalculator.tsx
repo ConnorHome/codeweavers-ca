@@ -59,6 +59,7 @@ export function FinanceCalculator({
         <Label>
           <span>Deposit (pounds)</span>
           <Input
+            name="deposit"
             value={deposit}
             onChange={(e) => setDeposit(Number(e.target.value))}
           />
@@ -67,6 +68,7 @@ export function FinanceCalculator({
         <Label>
           <span>Term (months)</span>
           <Input
+            name="term"
             value={term}
             onChange={(e) => setTerm(Number(e.target.value))}
           />
@@ -76,27 +78,40 @@ export function FinanceCalculator({
       <dl className="flex flex-col gap-3 bg-slate-100 border uppercase text-slate-500 border-slate-200 p-5 rounded-md [&_div]:flex [&_div]:gap-5 [&_dt]:w-1/2">
         <div>
           <dt>On the road price</dt>
-          <dd>£{results.onTheRoadPrice.toLocaleString()}</dd>
+          <dd data-testid="on-the-road-price">
+            £{results.onTheRoadPrice.toLocaleString()}
+          </dd>
         </div>
 
         <div>
           <dt>Total deposit</dt>
-          <dd>£{results.totalDeposit.toLocaleString()}</dd>
+          <dd data-testid="total-deposit">
+            £{results.totalDeposit.toLocaleString()}
+          </dd>
         </div>
 
         <div>
           <dt>Total amount of credit</dt>
-          <dd>£{results.totalAmountOfCredit.toLocaleString()}</dd>
+          <dd data-testid="total-amount-of-credit">
+            £{results.totalAmountOfCredit.toLocaleString()}
+          </dd>
         </div>
 
         <div>
           <dt>Number of monthly payments</dt>
-          <dd>{results.numberOfMonthlyPayments}</dd>
+          <dd data-testid="number-of-monthly-payments">
+            {results.numberOfMonthlyPayments}
+          </dd>
         </div>
 
         <div className="text-xl font-bold">
           <dt>Monthly payment</dt>
-          <dd>£{results.monthlyPayment.toLocaleString()}</dd>
+          <dd data-testid="monthly-payment">
+            £
+            {results.monthlyPayment.toLocaleString(undefined, {
+              maximumFractionDigits: 2,
+            })}
+          </dd>
         </div>
       </dl>
     </section>
