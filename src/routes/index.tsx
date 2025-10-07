@@ -6,6 +6,7 @@ import { mockApi } from "../utils/mockApi";
 import { VehicleCard } from "../components/vehicleCard";
 import { Spinner } from "../components/spinner";
 import { Select } from "../components/select";
+import { Input } from "../components/input";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -35,6 +36,7 @@ function Index() {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<Vehicle[]>([]);
   const [sortOrder, setSortOrder] = useState<SortValue>(sortOptions[0].value);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -46,8 +48,14 @@ function Index() {
   }, []);
 
   const sortedData = useMemo(() => {
-    return data.toSorted(sortMethods[sortOrder]);
-  }, [data, sortOrder]);
+    return data
+      .filter((vehicle) =>
+        `${vehicle.make} ${vehicle.model}`
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      )
+      .toSorted(sortMethods[sortOrder]);
+  }, [data, searchTerm, sortOrder]);
 
   return (
     <div className="p-10 min-h-dvh">
@@ -57,7 +65,7 @@ function Index() {
         {isLoading ? <Spinner /> : `(${data.length})`}
       </header>
 
-      <div className="flex gap-3 justify-between mb-10">
+      <div className="flex not-sm:flex-col gap-5 justify-between mb-10">
         <Select
           className="flex-1"
           name="sort-by"
@@ -72,6 +80,13 @@ function Index() {
             );
           })}
         </Select>
+
+        <Input
+          placeholder="Search make & model…"
+          className="flex-1"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
 
       {sortedData.length > 0 && (
