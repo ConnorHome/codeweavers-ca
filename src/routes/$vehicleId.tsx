@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { mockApi } from "../utils/mockApi";
 import type { Vehicle } from "../types";
 import { Spinner } from "../components/spinner";
+import { FinanceCalculator } from "../components/financeCalculator";
 
 export const Route = createFileRoute("/$vehicleId")({
   component: Vehicle,
@@ -66,27 +67,31 @@ function Vehicle() {
       </header>
 
       {data && (
-        <dl className="flex flex-col gap-3 bg-slate-100 border uppercase text-slate-500 border-slate-200 p-5 rounded-md [&_div]:flex [&_div]:gap-5 [&_dt]:w-1/2 [&_dt]:font-bold">
-          <div>
-            <dt>Year</dt>
-            <dd>{data.year}</dd>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <dl className="self-start flex flex-col gap-3 bg-slate-100 border uppercase text-slate-500 border-slate-200 p-5 rounded-md [&_div]:flex [&_div]:gap-5 [&_dt]:w-1/2 [&_dt]:font-bold">
+            <div>
+              <dt>Year</dt>
+              <dd>{data.year}</dd>
+            </div>
 
-          <div>
-            <dt>Price</dt>
-            <dd>£{data.price.toLocaleString()}</dd>
-          </div>
+            <div>
+              <dt>Price</dt>
+              <dd>£{data.price.toLocaleString()}</dd>
+            </div>
 
-          <div>
-            <dt>Mileage</dt>
-            <dd>{data.mileage.toLocaleString()}</dd>
-          </div>
+            <div>
+              <dt>Mileage</dt>
+              <dd>{data.mileage.toLocaleString()}</dd>
+            </div>
 
-          <div>
-            <dt>Colour</dt>
-            <dd>{data.colour}</dd>
-          </div>
-        </dl>
+            <div>
+              <dt>Colour</dt>
+              <dd>{data.colour}</dd>
+            </div>
+          </dl>
+
+          <FinanceCalculator vehicle={data} />
+        </div>
       )}
     </div>
   );
